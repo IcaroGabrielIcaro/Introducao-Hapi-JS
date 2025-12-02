@@ -4,7 +4,7 @@ Nesse material pode-se encontrar desde a contextualização histórica do framwo
 
 Tópicos:
 - [Introdução](https://github.com/IcaroGabrielIcaro/Introducao-Hapi-JS/tree/introducao)
-- Como rodar
+- [Como rodar](https://github.com/IcaroGabrielIcaro/Introducao-Hapi-JS/tree/como-rodar)
 - Banco de dados
 - Swagger
 - Jwt
