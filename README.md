@@ -1,324 +1,121 @@
-# Introdução ao Hapi Js
+# Introdução ao Hapi.js
 
-Hapi.js é um framework do **Node.js** usado para criar APIs REST de forma simples e organizada.
+O Hapi.js (mais conhecido como hapi) é um framework open source para Node.js, criado em 2011 por Eran Hammer enquanto trabalhava no Walmart Labs. Sua criação surgiu a partir de uma necessidade real do Walmart em lidar com grandes volumes de requisições, especialmente em períodos de tráfego extremo, como a Black Friday, uma das datas mais movimentadas do comércio eletrônico nos Estados Unidos.
 
-Neste projeto, vamos criar uma API completa com:
-- Servidor Hapi.js
-- Banco de dados PostgreSQL
-- Autenticação com JWT
-- Documentação com Swagger
+Segundo Mez (“Introduction to Hapi.js”, Medium), o hapi:
 
-## Instalação
+> “Foi criado pela equipe mobile do Walmart Labs — liderada por Eran Hammer, criador do OAuth — para lidar com o tráfego de eventos como a Black Friday, um dos dias mais movimentados do comércio online nos EUA.”
+(MEZ, 2017)
 
-*É necessário ter o **Node** instalado em uma versão LTS*
+Inicialmente, o Hapi utilizava o Express como base, porém, com o tempo, o Walmart identificou limitações importantes no framework, que não atendiam às exigências específicas do projeto. Dessa forma, o Hapi evoluiu até se tornar um framework independente, totalmente separado do Express.
 
-Conferir se tem o node instalado:
-```cmd
-node --version
-```
+> “As versões originais do hapi usavam o framework Express. O Walmart descobriu que havia limitações no Express que o tornavam inadequado para seus requisitos específicos.”
+(MEZ, 2017)
 
-## Ambiente
+## Motivações para a Criação do Hapi.js
 
-```cmd
-mkdir hapi-project
-cd hapi-project
-npm init -y
-```
+O Hapi foi criado com foco em três pilares principais:
 
-Criação do diretório chamado **hapi-project** <br>
-Inicialização do **package.json** com os valores default
+- Segurança
+- Organização do código
+- Controle rígido do comportamento do servidor
 
-### Instalação do Hapi
+Na época do seu surgimento, o Express era praticamente a principal alternativa no ecossistema Node.js. No entanto, apesar de sua popularidade, ele apresentava algumas limitações importantes: era extremamente flexível, pouco opinativo e dependente de um grande número de bibliotecas externas para suprir funcionalidades básicas.
 
-Agora com o package.json pronto é possível instalar o Hapi Js nele
+Dessa forma, o Hapi surgiu para resolver principalmente:
 
-```cmd
-npm install @hapi/hapi
-```
+- A falta de padronização
+- A ausência de segurança por padrão
+- A inexistência de uma estrutura clara para APIs de grande porte
 
-Ao final o package.json terá o Hapi em suas dependências e o **package-lock.json** será criado, assim como o **node_modules** (deve ser ignorado com *.gitignore*)
+Seu objetivo era ser um framework seguro, organizado, confiável e preparado para aplicações corporativas.
 
-```json
-{
-  "name": "hapi-project",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "dependencies": {
-    "@hapi/hapi": "^21.4.4"
-  }
-}
-```
+> “O hapi é importante porque foi projetado para permitir que os desenvolvedores foquem nas tarefas críticas do projeto, em vez de gastar tempo construindo toda a infraestrutura.”
+(MEZ, 2017)
 
-### Instalação do PostgreSQL
+## Proposta e Características do Hapi.js
 
-Para a conexão do banco de dados **PostgreSQL** é necessário fazer a instalação do seguinte pacote:
+O Hapi se propõe a ser um framework para construção de APIs e servidores web em Node.js, assim como o Express, Fastify e NestJS. No entanto, sua principal diferença está no fato de já oferecer uma estrutura bem definida desde o início, evitando improvisações (“gambiarras”) e incentivando uma arquitetura mais profissional.
 
-```cmd
-npm install pg
-```
+Ao instalar o Hapi, o desenvolvedor já conta com:
 
-Ao final o package.json terá as dependências **pg**, sendo a interface para o banco de dados PostgreSQL.
+- Proteções de segurança ativadas por padrão
+- Integração nativa com o Joi para validação de dados
+- Sistema avançado de autenticação e autorização
+- Arquitetura modular baseada em plugins
+- Suporte nativo a cookies criptografados e cabeçalhos de segurança HTTP
 
-```json
-{
-  "name": "hapi-project",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "dependencies": {
-    "@hapi/hapi": "^21.4.4",
-    "pg": "^8.16.3"
-  }
-}
-```
+De acordo com a própria documentação oficial do Hapi:
 
-## Configuração do PostgreSQL
+> “O hapi exige configurações altamente seguras, possui padrões seguros por padrão, arquitetura avançada de autenticação e autorização, além de diversos mecanismos de proteção contra ataques.”
+(HAPI.DEV, 2024)
 
-É importante começar a definir os diretórios para garantir uma boa organização do projeto.
+Obs: *Embora o Hapi possua um sistema nativo de autenticação e autorização, ele não implementa diretamente métodos específicos como JWT ou OAuth. Em vez disso, oferece uma infraestrutura completa para o uso de estratégias de autenticação, permitindo ao desenvolvedor integrar diferentes mecanismos por meio de plugins externos, como o hapi-auth-jwt2. Dessa forma, o framework mantém sua flexibilidade sem abrir mão da padronização e da segurança.*
 
-```txt
-hapi-project/
-├── src/
-│   └── config/
-├── .env
-└── package.json
-```
+## Popularidade e Adoção do Hapi
 
-Agora está definido o diretório **src/** que guardará todas as estruturas do projeto e dentro o diretório **config/** que guardará as configurações importantes para o projeto, assim como o **.env** que guardará informações importantes.
+Apesar de suas qualidades técnicas, o Hapi acabou não se tornando tão popular quanto o Express. Isso ocorreu principalmente porque o Express surgiu antes e já estava fortemente consolidado no mercado quando o Hapi foi lançado.
 
+Além disso, frameworks mais modernos como o NestJS ganharam grande destaque nos últimos anos, especialmente por trazerem uma proposta mais atual, com forte inspiração em arquiteturas corporativas como as do Spring Framework, muito utilizado no ecossistema Java.
 
-### Definindo .env
+Pode-se dizer que:
 
-No *.env* será deixado as informações de conexão com o banco de dados
+- O Hapi é mais rígido, o que pode assustar iniciantes
+- Possui menos marketing
+- Conta com uma comunidade menor
+- Foi ofuscado pela ascensão do NestJS
 
-```text
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=hapi-project
-DB_USER=postgres
-DB_PASSWORD=postgres
-```
+## Comparação: Hapi.js vs Express
 
-### Definindo src/config/database.js
+| Hapi | Express |
+|------|---------|
+| Mais organizado | Mais simples |
+| Mais seguro por padrão | Segurança depende de bibliotecas externas |
+| Ideal para projetos grandes | Ideal para projetos menores |
+| Arquitetura bem definida | Estrutura livre |
 
-Para configuração das informações do *.env* é necessário criar o **database.js** com o seguinte codigo:
+O Express apresenta como principais vantagens:
 
-```js
-const { Pool } = require('pg');
-require('dotenv').config();
+- Rápido aprendizado
+- Pouca configuração inicial
+- Grande comunidade
+- Flexibilidade total
 
-class Database {
-  constructor() {
-    this.pool = new Pool({
-      host: process.env.DB_HOST,
-      port: process.env.DB_PORT,
-      database: process.env.DB_NAME,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-    });
-  }
+Entretanto, essa liberdade pode se tornar um problema em projetos grandes, pois gera falta de padronização, dificuldade de manutenção e maior risco de falhas de segurança (SIMFORM, 2023).
 
-  async query(sql, params = []) {
-    return this.pool.query(sql, params);
-  }
-}
+Já o Hapi se destaca por:
 
-module.exports = new Database();
-```
+- Plugins robustos
+- Código mais organizado
+- Segurança por padrão
+- Validação automática de dados
+- Suporte a microserviços
+- Caching integrado
 
-- **Pool**: é quem gerencia as conexões com o PostgreSQL.
-- **require('dotenv').config()**: carrega as variáveis dentro do *.env*.
-- **class Database**: classe para representar a conexão com o banco de dados.
-- **constructor()**: é executado quando a classe é criada e configura a conexão (vindo do *.env*) com:
-  - Host
-  - Porta
-  - Bando de dados
-  - Usuário
-  - Senha
-- **async query(sql, params = [])**: cria um método para executar comandos SQL no banco:
-  - *sql*: comando SQL (SELECT, INSERT, etc)
-  - *params*: valores dinâmicos
-- **module.exports = new Database()**: exporta uma única instância da conexão para ser usada em todo o projeto.
+Entre suas desvantagens estão:
+
+- Comunidade menor
+- Menor compatibilidade com módulos do Express
+- Maior curva de aprendizado
+
+Além disso, o Hapi também é bastante utilizado como proxy:
+
+> “O hapi é uma boa escolha para a construção de proxies. O Walmart, por exemplo, usa o hapi para encaminhar requisições da sua API para serviços Java externos.”
+(MEZ, 2017)
+
+## Conclusão
+
+O Hapi.js é um framework sólido, maduro e altamente seguro, criado para suprir uma lacuna existente no ecossistema Node.js no início da década de 2010. Ele se destaca principalmente em aplicações corporativas, de grande porte, onde organização, padronização e segurança são requisitos fundamentais.
+
+Apesar de não ser tão popular quanto o Express ou o NestJS, o Hapi permanece sendo uma excelente escolha para sistemas críticos, que exigem alto nível de confiabilidade.
 
 ## Referências
 
-- [Introdução do Projeto](https://dev.to/kachiic/hapi-js-part-1-how-to-make-a-hapi-js-server-in-10-minutes-12kc)
-- [Configuração PostgreSQL](https://moldstud.com/articles/p-integrating-graphql-with-hapijs-and-postgresql-a-complete-guide-for-developers)
+MEZ, J. Introduction to Hapi.js. Medium, 2017. Disponível em:
+https://medium.com/@jsonmez/introduction-to-hapi-js-c128f40bd919
 
-## Definição dos Modelos
+HAPI.DEV. Security and Architecture Documentation. Disponível em:
+https://hapi.dev/
 
-Para manter todos os modelos organizados em seu lugar específico será criado o diretório de modelos, repository e migrations.
-
-```txt
-hapi-project/
-├── src/
-│   ├── models/
-│   ├── repository/
-│   ├── migrations/
-│   └── config/
-├── .env
-└── package.json
-```
-
-- **models**: guarda as entidades JavaScript que representam as tabelas do banco
-- **Repository**: guarda as operações de consulta  dos modelos ao banco
-- **Migrations**: guarda as operações de criação dos modelos no banco
-
-### Definindo Usuário
-
-Antes de definir o usuário propriamente dito é importante saber o que é necessário para definir a sua autenticação com o JWT e validação dos dados.
-
-### Instalação do JWT
-
-```cmd
-npm install @hapi/jwt
-```
-
-Essa dependência é importante para validar tokens JWT e proteger rotas
-
-```cmd
-npm install bcryptjs jsonwebtoken joi @hapi/boom
-```
-
-- **bcryptjs**: criptografar senha
-- **jsonwebtoken**: criar token no login
-- **joi**: validar dados (email, senha, etc)
-- **@hapi/boom**: erros padronizados
-
-### Configuração do JWT
-
-Primeiro deve-se ajustar o *.env* para adicionar as configurações de jwt
-
-```txt
-# BANCO DE DADOS
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=hapi-project
-DB_USER=postgres
-DB_PASSWORD=postgres
-
-# JWT
-JWT_SECRET=minha_chave_super_secreta
-JWT_EXPIRES_IN=1d
-```
-
-Agora define-se as configurações do jwt
-
-```js
-require('dotenv').config();
-
-class JwtConfig {
-  constructor() {
-    this.secret = process.env.JWT_SECRET;
-    this.expiresIn = process.env.JWT_EXPIRES_IN;
-  }
-
-  getConfig() {
-    return {
-      secret: this.secret,
-      expiresIn: this.expiresIn
-    };
-  }
-}
-
-module.exports = new JwtConfig();
-```
-
-As outras dependências não necessitam de uma configuração específica como essa
-
-### Migration de Usuário
-
-```js
-const database = require('../config/database');
-
-class CriarTabelaUsuario {
-  async executar() {
-    const sql = `
-      CREATE TABLE IF NOT EXISTS users (
-        id SERIAL PRIMARY KEY,
-        nome VARCHAR(100) NOT NULL,
-        email VARCHAR(150) NOT NULL UNIQUE,
-        senha VARCHAR(255) NOT NULL,
-        created_at TIMESTAMP DEFAULT NOW()
-      );
-    `;
-
-    await database.query(sql);
-
-    console.log('✅ Tabela "users" criada com sucesso!');
-    process.exit();
-  }
-}
-
-new CriarTabelaUsuario().executar();
-```
-
-### Model de Usuário
-
-```js
-class User {
-  constructor({ id = null, nome, email, senha }) {
-    this.id = id;
-    this.nome = nome;
-    this.email = email;
-    this.senha = senha;
-  }
-}
-
-module.exports = User;
-```
-
-### Repository de Usuário
-
-```js
-const database = require('../config/database');
-const User = require('../models/User');
-
-class UserRepository {
-  async create(user) {
-    const query = `
-      INSERT INTO users (nome, email, senha)
-      VALUES ($1, $2, $3)
-      RETURNING *
-    `;
-
-    const values = [user.nome, user.email, user.senha];
-
-    const { rows } = await database.query(query, values);
-    return new User(rows[0]);
-  }
-
-  async findByEmail(email) {
-    const query = `SELECT * FROM users WHERE email = $1`;
-    const { rows } = await database.query(query, [email]);
-
-    if (!rows.length) return null;
-    return new User(rows[0]);
-  }
-
-  async findById(id) {
-    const query = `SELECT * FROM users WHERE id = $1`;
-    const { rows } = await database.query(query, [id]);
-
-    if (!rows.length) return null;
-    return new User(rows[0]);
-  }
-}
-
-module.exports = new UserRepository();
-```
+SIMFORM. Express vs Hapi – Pros and Cons. 2023. Disponível em:
+https://www.simform.com/blog/express-vs-hapi/
