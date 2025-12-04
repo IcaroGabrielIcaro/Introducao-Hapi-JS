@@ -1,4 +1,5 @@
-const UserController = require('../controllers/UserController');
+const UserHandler = require('../handlers/userHandler');
+const { createUserSchema } = require('../schemas/userSchema');
 
 module.exports = {
   name: 'user-routes',
@@ -8,20 +9,50 @@ module.exports = {
       {
         method: 'POST',
         path: '/users',
-        handler: UserController.create,
+        handler: UserHandler.create,
         options: {
           tags: ['api'],
           description: 'Criar usuário',
           auth: false,
+
+          validate: {
+            payload: createUserSchema,
+          },
+
+          response: {
+            status: {
+              201: require('joi').object({
+                id: require('joi').number(),
+                username: require('joi').string(),
+                email: require('joi').string(),
+                password: require('joi').string(),
+                createdAt: require('joi').date(),
+                updatedAt: require('joi').date(),
+              }),
+            },
+          },
         },
       },
       {
         method: 'GET',
         path: '/users',
-        handler: UserController.list,
+        handler: UserHandler.list,
         options: {
           tags: ['api'],
           description: 'Listar usuários',
+
+          response: {
+            status: {
+              201: require('joi').object({
+                id: require('joi').number(),
+                username: require('joi').string(),
+                email: require('joi').string(),
+                password: require('joi').string(),
+                createdAt: require('joi').date(),
+                updatedAt: require('joi').date(),
+              }),
+            },
+          },
         },
       },
     ]);

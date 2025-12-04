@@ -1,9 +1,9 @@
-const { DataTypes, Model } = require('sequelize');
-const Database = require('../config/Database');
+const { Model, DataTypes } = require('sequelize');
+const Database = require('../utils/database');
 
-class PerfilUsuario extends Model {}
+class UserProfile extends Model {}
 
-PerfilUsuario.init(
+UserProfile.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -18,9 +18,9 @@ PerfilUsuario.init(
   },
   {
     sequelize: Database.connection,
-    tableName: 'perfil_usuarios',
+    tableName: 'users_profile',
     timestamps: false,
   }
 );
 
-module.exports = PerfilUsuario;
+module.exports = UserProfile;
