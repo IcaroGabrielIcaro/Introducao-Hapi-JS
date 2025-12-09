@@ -48,6 +48,18 @@ class CursoService {
             const plain = curso.get({ plain: true });
             delete plain.createdAt;
             delete plain.updatedAt;
+
+            if (plain.professor) {
+                delete plain.professor.password;
+                delete plain.professor.createdAt;
+                delete plain.professor.updatedAt;
+
+                if (plain.professor.userProfile) {
+                    delete plain.professor.userProfile.createdAt;
+                    delete plain.professor.userProfile.updatedAt;
+                }
+            }
+
             return plain;
         });
     }
@@ -71,6 +83,17 @@ class CursoService {
         delete plain.createdAt;
         delete plain.updatedAt;
 
+        if (plain.professor) {
+            delete plain.professor.password;
+            delete plain.professor.createdAt;
+            delete plain.professor.updatedAt;
+
+            if (plain.professor.userProfile) {
+                delete plain.professor.userProfile.createdAt;
+                delete plain.professor.userProfile.updatedAt;
+            }
+        }
+
         return plain;
     }
 
@@ -78,6 +101,25 @@ class CursoService {
         const curso = await Curso.findByPk(id);
 
         if (!curso) return null;
+
+        if (cursoData.professorId !== undefined) {
+            const professor = await User.findByPk(cursoData.professorId, {
+                include: [
+                    {
+                        model: UserProfile,
+                        as: 'userProfile',
+                    }
+                ]
+            });
+
+            if (!professor) {
+                throw new Error("Professor não encontrado.");
+            }
+
+            if (!professor.userProfile || professor.userProfile.perfil !== 'professor') {
+                throw new Error('O usuário informado não é um professor.');
+            }
+        }
 
         await curso.update(cursoData);
 
