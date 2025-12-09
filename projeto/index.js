@@ -2,6 +2,7 @@ const Server = require('./src/utils/server');
 const Swagger = require('./src/utils/swagger');
 const userRoutes = require('./src/routes/UserRoutes');
 const Database = require('./src/utils/database');
+const cursoRoutes = require('./src/routes/cursoRoutes');
 
 class App {
   constructor() {
@@ -21,6 +22,7 @@ class App {
 
   async registerRoutes() {
     await this.server.register(userRoutes);
+    await this.server.register(cursoRoutes);
   }
 
   async start() {
