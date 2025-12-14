@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const Database = require('../utils/database');
-const User = require('./User')
+const User = require('./user')
 
 class Curso extends Model {}
 
