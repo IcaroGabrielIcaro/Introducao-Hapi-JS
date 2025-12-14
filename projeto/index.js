@@ -1,9 +1,11 @@
 const Server = require('./src/utils/server');
 const Swagger = require('./src/utils/swagger');
-const userRoutes = require('./src/routes/UserRoutes');
 const Database = require('./src/utils/database');
+const userRoutes = require('./src/routes/userRoutes');
 const cursoRoutes = require('./src/routes/cursoRoutes');
 const moduloRoutes = require('./src/routes/moduloRoutes');
+const aulaRoutes = require('./src/routes/aulaRoutes');
+const matriculaRoutes = require('./src/routes/matriculaRoutes');
 
 class App {
   constructor() {
@@ -25,6 +27,8 @@ class App {
     await this.server.register(userRoutes);
     await this.server.register(cursoRoutes);
     await this.server.register(moduloRoutes);
+    await this.server.register(aulaRoutes);
+    await this.server.register(matriculaRoutes);
   }
 
   async start() {
